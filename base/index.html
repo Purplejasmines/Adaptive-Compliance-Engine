@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tax, Your tax, Our Destiny</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <div class="logo-icon" style="display: none;">ZRA</div>
+                       <a href="#home"><img src="img/zra_img.png" alt="ZRA logo-icon" style="width:120px; border-radius: 30px; padding: 10px;"></a>
+                    <div class="logo-text">
+                        <h1>Zambia Revenue Authority</h1>
+                        <p>My Tax, Your tax, Our Destiny</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-outline"><i class="fas fa-search"></i> Search</button>
+                  <a href="src/register.php" > <button class="btn-primary"><i class="fas fa-user"></i> TAP Login</button></a>
+                  <a href="src/register_admin.php" > <button class="btn-primary"><i class="fas fa-user"></i> TAP Admin Login</button></a>
+
+                </div>
+            </div>
+            
+            <nav class="navbar">
+                <ul class="nav-menu">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="dashboards.html">Dashboards</a></li>
+                    <li><a href="#business">Business</a></li>
+                    <li><a href="#customs">Customs</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#news">News</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!------ Hero Section ------>
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Welcome to Zambia Revenue Authority</h1>
+                <p>Simplifying Tax Compliance and Revenue Collection for National Development</p>
+                <div class="hero-buttons">
+                    <button class="btn-large"><i class="fas fa-file-alt"></i> File Returns</button>
+                    <button class="btn-large secondary"><i class="fas fa-credit-card"></i> Make Payment</button>
+                    <button class="btn-large outline"><i class="fas fa-user-plus"></i> Register TPIN</button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <h3>2.1M+</h3>
+                    <p>Registered Taxpayers</p>
+                </div>
+                <div class="stat-card">
+                    <h3>ZMW 57.2B</h3>
+                    <p>Revenue Collected (2024)</p>
+                </div>
+                <div class="stat-card">
+                    <h3>95%</h3>
+                    <p>Online Services Usage</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!------ Quick Services Section ------>
+    <section class="quick-services" id="services">
+        <div class="container">
+            <h2 class="section-title">Quick Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3>File Tax Returns</h3>
+                    <p>Submit your income tax, VAT, and other returns online</p>
+                    <button class="btn-service">File Now <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Make Payments</h3>
+                    <p>Pay taxes securely using multiple payment methods</p>
+                    <button class="btn-service">Pay Now <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3>TPIN Registration</h3>
+                    <p>Register for your Taxpayer Identification Number</p>
+                    <button class="btn-service">Register <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Check Status</h3>
+                    <p>Track your application, refund, or compliance status</p>
+                    <button class="btn-service">Check <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Tax Calculators</h3>
+                    <p>Calculate your tax obligations using our tools</p>
+                    <a href="Users/taxcalculate.html"><button class="btn-service">Calculate <i class="fas fa-arrow-right"></i></button></a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>Downloads</h3>
+                    <p>Forms, guides, and software for taxpayers</p>
+                    <button class="btn-service">Download <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!------ News Section ------>
+    <section class="news-section" id="news">
+        <div class="container">
+            <h2 class="section-title">Latest News & Updates</h2>
+            <div class="news-grid">
+                <article class="news-card">
+                    <div class="news-date">Dec 15, 2024</div>
+                    <h3>Extended Deadline for 2024 Tax Returns</h3>
+                    <p>Taxpayers granted additional two weeks to file their annual tax returns for the 2024 tax year.</p>
+                    <a href="#" class="news-link">Read More <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="news-card">
+                    <div class="news-date">Dec 10, 2024</div>
+                    <h3>New Online Payment System Launched</h3>
+                    <p>Enhanced payment gateway with support for mobile money and online banking.</p>
+                    <a href="#" class="news-link">Read More <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="news-card">
+                    <div class="news-date">Dec 5, 2024</div>
+                    <h3>Tax Education Workshops Schedule</h3>
+                    <p>Free workshops for small businesses and individual taxpayers across all provinces.</p>
+                    <a href="#" class="news-link">Read More <i class="fas fa-arrow-right"></i></a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-------- Footer -------->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Zambia Revenue Authority</h3>
+                    <p>Ensuring sustainable national development through efficient revenue collection and taxpayer services.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#taxpayer">Taxpayer Services</a></li>
+                        <li><a href="#business">Business Services</a></li>
+                        <li><a href="#customs">Customs Services</a></li>
+                        <li><a href="#news">News & Updates</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> +260 211 123 456</p>
+                        <p><i class="fas fa-envelope"></i> info@nrs.gov.zm</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Revenue House, Independence Avenue, Lusaka</p>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Emergency Contacts</h4>
+                    <div class="emergency-contacts">
+                        <p>Tax Fraud Hotline: +260 211 999 888</p>
+                        <p>Customs Emergency: +260 211 777 666</p>
+                        <p>Technical Support: +260 211 555 444</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Zambia Revenue Authority. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Sitemap</a>
+                    <a href="#">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

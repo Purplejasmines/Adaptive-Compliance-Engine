@@ -1,0 +1,200 @@
+{
+  "mobile_money": {
+    "enabled": true,
+    "providers": {
+      "airtel": {
+        "enabled": true,
+        "api_key": "YOUR_AIRTEL_API_KEY",
+        "api_secret": "YOUR_AIRTEL_API_SECRET",
+        "base_url": "https://api.airtel.co.zm/money/v1",
+        "timeout": 30,
+        "retry_attempts": 3
+      },
+      "mtn": {
+        "enabled": true,
+        "api_key": "YOUR_MTN_API_KEY",
+        "subscription_key": "YOUR_MTN_SUBSCRIPTION_KEY",
+        "base_url": "https://api.mtn.co.zm/collection/v1",
+        "timeout": 30,
+        "retry_attempts": 3
+      },
+      "zamtel": {
+        "enabled": true,
+        "api_key": "YOUR_ZAMTEL_API_KEY",
+        "merchant_id": "YOUR_ZAMTEL_MERCHANT_ID",
+        "base_url": "https://api.zamtel.co.zm/kwacha/v1",
+        "timeout": 30,
+        "retry_attempts": 3
+      }
+    },
+    "monitoring": {
+      "transaction_lookback_days": 90,
+      "batch_size": 1000,
+      "sync_interval_hours": 24,
+      "real_time_monitoring": true
+    },
+    "business_detection": {
+      "enabled": true,
+      "thresholds": {
+        "min_transactions": 20,
+        "min_unique_customers": 10,
+        "min_business_score": 60,
+        "business_hours_ratio": 0.7
+      }
+    },
+    "tax_calculation": {
+      "turnover_tax_rate": 0.04,
+      "presumptive_tax_rate": 0.15,
+      "standard_tax_rate": 0.30,
+      "turnover_tax_threshold": 800000,
+      "presumptive_tax_threshold": 8000000
+    },
+    "compliance": {
+      "discrepancy_threshold": 0.20,
+      "audit_threshold": 0.30,
+      "monitoring_period_days": 90
+    },
+    "notifications": {
+      "sms_enabled": true,
+      "sms_provider": "zamtel",
+      "languages": ["en", "bem", "nya", "toi"],
+      "reminder_days_before_deadline": [30, 14, 7, 1]
+    }
+  },
+  "informal_economy": {
+    "enabled": true,
+    "outreach_campaigns": {
+      "channels": ["sms", "ussd", "radio", "community_meetings"],
+      "languages": ["en", "bem", "nya", "toi", "loz"],
+      "target_provinces": [
+        "lusaka",
+        "copperbelt",
+        "southern",
+        "eastern",
+        "central",
+        "northern",
+        "luapula",
+        "northwestern",
+        "western",
+        "muchinga"
+      ]
+    },
+    "formalization_incentives": {
+      "first_year_discount": 0.50,
+      "education_program": true,
+      "business_support": true,
+      "microfinance_access": true
+    }
+  },
+  "rural_support": {
+    "enabled": true,
+    "ussd": {
+      "enabled": true,
+      "shortcode": "*123#",
+      "menu_language_default": "en",
+      "session_timeout_seconds": 180
+    },
+    "sms": {
+      "enabled": true,
+      "sender_id": "ZRA",
+      "max_length": 160,
+      "unicode_support": true
+    },
+    "offline_mode": {
+      "enabled": true,
+      "sync_interval_hours": 24,
+      "max_offline_days": 7,
+      "auto_sync_on_connection": true
+    }
+  },
+  "languages": {
+    "supported": [
+      {
+        "code": "en",
+        "name": "English",
+        "native_name": "English",
+        "enabled": true,
+        "default": true
+      },
+      {
+        "code": "bem",
+        "name": "Bemba",
+        "native_name": "Ichibemba",
+        "enabled": true,
+        "speakers_percentage": 33
+      },
+      {
+        "code": "nya",
+        "name": "Nyanja",
+        "native_name": "Chinyanja",
+        "enabled": true,
+        "speakers_percentage": 15
+      },
+      {
+        "code": "toi",
+        "name": "Tonga",
+        "native_name": "Chitonga",
+        "enabled": true,
+        "speakers_percentage": 11
+      },
+      {
+        "code": "loz",
+        "name": "Lozi",
+        "native_name": "Silozi",
+        "enabled": true,
+        "speakers_percentage": 6
+      },
+      {
+        "code": "lun",
+        "name": "Lunda",
+        "native_name": "Chilunda",
+        "enabled": false,
+        "speakers_percentage": 3
+      },
+      {
+        "code": "kqn",
+        "name": "Kaonde",
+        "native_name": "Chikaonde",
+        "enabled": false,
+        "speakers_percentage": 3
+      }
+    ]
+  },
+  "sectors": {
+    "mining": {
+      "enabled": true,
+      "minerals": ["copper", "cobalt", "gold", "emeralds", "manganese"],
+      "lme_integration": true,
+      "transfer_pricing_monitoring": true,
+      "artisanal_mining_support": true
+    },
+    "agriculture": {
+      "enabled": true,
+      "crops": ["maize", "tobacco", "cotton", "soybeans", "wheat"],
+      "fsp_integration": true,
+      "smallholder_support": true,
+      "presumptive_tax_enabled": true
+    },
+    "cross_border": {
+      "enabled": true,
+      "borders": [
+        "chirundu",
+        "kazungula",
+        "nakonde",
+        "chanida",
+        "kasumbalesa",
+        "jimbe",
+        "katima_mulilo",
+        "mokambo"
+      ],
+      "comesa_integration": true,
+      "real_time_monitoring": true
+    }
+  },
+  "reporting": {
+    "dashboard_refresh_seconds": 60,
+    "kpi_calculation_interval_hours": 1,
+    "report_generation_schedule": "0 6 * * *",
+    "data_retention_days": 2555
+  }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Tax Calculator</title>
+</head>
+<body>
+
+     <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <div class="logo-icon" style="display: none;">ZRA</div>
+                       <a href="#home"><img src="../img/zra_img.png" alt="ZRA logo-icon" style="width:120px; border-radius: 30px; padding: 10px;"></a>
+                    <div class="logo-text">
+                        <h1>Zambia Revenue Authority</h1>
+                        <p>Your Taxes, Your Nation, Your Responsibility</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <nav class="navbar">
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="active">Home</a></li>
+                </ul>
+               
+            </nav> -->
+        </div>
+    </header>
+
+    <div>
+                
+       <a href="dashboard.php" style="color: #fff; text-decoration: none;">
+        <button class="btn-primary" 
+        style="padding: 10px; margin: 30px; font-size: 14px; border-radius: 10px; background-color: rgb(89, 0, 255); text-align: center;">
+        Go Back</a></button>
+    </div>
+            
+     <!------ Tax Calculator Section ------>
+    <section class="tax-calculator" id="calculator">
+        <div class="container">
+            <h2 class="section-title">PAYE Tax Calculator</h2>
+            <div class="calculator-container">
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="annualIncome">Annual Income (ZMW)</label>
+                        <input type="number" id="annualIncome" placeholder="Enter your annual income">
+                    </div>
+                    <div class="form-group">
+                        <label for="taxType">Tax Type</label>
+                        <select id="taxType">
+                            <option value="paye">PAYE (Individuals)</option>
+                            <option value="company">Company Tax</option>
+                            <option value="vat">VAT</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="calculateTax()">Calculate Tax</button>
+                </div>
+                <div class="calculator-result" id="calculatorResult">
+                    <h3>Tax Calculation Results</h3>
+                    <div class="result-item">
+                        <span>Annual Income:</span>
+                        <span id="resultIncome">ZMW 0.00</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Taxable Income:</span>
+                        <span id="resultTaxable">ZMW 0.00</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Annual Tax:</span>
+                        <span id="resultAnnualTax">ZMW 0.00</span>
+                    </div>
+                    <div class="result-item total">
+                        <span>Monthly Tax:</span>
+                        <span id="resultMonthlyTax">ZMW 0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../script.js"></script>
+
+</body>
+</html>
