@@ -1,0 +1,25 @@
+# Lightweight Dockerfile for AI Testing
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install minimal system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy only the test file and minimal requirements
+COPY test_ai_simple.py .
+COPY requirements-test.txt .
+
+# Install minimal dependencies for testing
+RUN pip install --no-cache-dir -r requirements-test.txt
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
+
+# Run the AI test
+CMD ["python", "test_ai_simple.py"]
+

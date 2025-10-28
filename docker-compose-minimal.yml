@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  zra-app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://zra_user:zra_password@postgres:5432/zra_db
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=your-secret-key-here
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+    networks:
+      - zra-network
+
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=zra_db
+      - POSTGRES_USER=zra_user
+      - POSTGRES_PASSWORD=zra_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - zra-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - zra-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  zra-network:
+    driver: bridge

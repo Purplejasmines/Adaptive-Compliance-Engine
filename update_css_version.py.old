@@ -1,0 +1,22 @@
+import os
+import re
+
+# Update CSS version in all HTML files
+dash_dir = r'd:\ZRA\dash'
+new_version = '20251022'
+
+for filename in os.listdir(dash_dir):
+    if filename.endswith('.html'):
+        filepath = os.path.join(dash_dir, filename)
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Replace version number
+        updated_content = re.sub(r'\?v=\d+', f'?v={new_version}', content)
+        
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(updated_content)
+        
+        print(f'Updated: {filename}')
+
+print(f'\nAll HTML files updated with CSS version: {new_version}')

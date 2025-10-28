@@ -1,0 +1,203 @@
+#!/usr/bin/env python3
+"""
+Script to update all dashboard files with authentication system
+"""
+import os
+import re
+from pathlib import Path
+
+# Directory containing dashboard files
+DASHBOARD_DIR = Path('static')
+
+# Files to update (relative to DASHBOARD_DIR)
+DASHBOARD_FILES = [
+    'dashboard.html',
+    'admin_dashboard.html',
+    'taxpayer_dashboard.html',
+    'data_sharing_dashboard.html'
+]
+
+def update_dashboard_file(file_path):
+    """Update a single dashboard file with authentication"""
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # 1. Add auth-manager.js to scripts
+        if 'auth-manager.js' not in content:
+            # Insert after the last <script> tag in head
+            content = content.replace(
+                '</head>',
+                '    <script src="js/auth-manager.js" defer></script>\n</head>'
+            )
+        
+        # 2. Update header with user menu
+        header_pattern = r'(<header[^>]*>.*?<div[^>]*class=["\']flex items-center space-x-4["\'][^>]*>)(.*?)(</div>.*?</header>)'
+        
+        new_header = """\1
+                    <button id="refresh-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-sync-alt mr-2"></i> Refresh
+                    </button>
+                    <div class="relative">
+                        <button id="user-menu" class="flex items-center text-white hover:text-blue-200">
+                            <span id="username" class="mr-2 user-email">Loading...</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-user-circle mr-2"></i> Profile
+                            </a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-cog mr-2"></i> Settings
+                            </a>
+                            <div class="border-t border-gray-100 my-1"></div>
+                            <a href="#" id="logout-btn" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Sign out
+                            </a>
+                        </div>
+                    </div>\3"""
+        
+        content = re.sub(header_pattern, new_header, content, flags=re.DOTALL)
+        
+        # 3. Add footer with status
+        if 'id="api-status"' not in content:
+            footer_pattern = r'(<footer[^>]*>.*?<div[^>]*class=["\']container[^>]*>)(.*?)(</div>.*?</footer>)'
+            new_footer = """\1
+            <p class="text-sm">
+                <span class="font-medium">ZRA Compliance Engine</span> 
+                <span class="mx-2">•</span>
+                <span id="api-status" class="inline-flex items-center">
+                    <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                    <span>Connected</span>
+                </span>
+                <span class="mx-2">•</span>
+                <span id="last-updated"></span>
+            </p>
+            <p class="text-xs mt-2 text-gray-300">
+                &copy; 2023 ZRA Compliance Engine. All rights reserved.
+            </p>\3"""
+            content = re.sub(footer_pattern, new_footer, content, flags=re.DOTALL)
+        
+        # 4. Add JavaScript for auth functionality
+        if 'updateLastUpdated' not in content:
+            js_script = """
+    <script>
+        // Update last updated time
+        function updateLastUpdated() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true
+            };
+            const lastUpdated = document.getElementById('last-updated');
+            if (lastUpdated) {
+                lastUpdated.textContent = `Last updated: ${now.toLocaleString('en-US', options)}`;
+            }
+        }
+        
+        // Toggle user dropdown
+        document.addEventListener('DOMContentLoaded', () => {
+            const userMenu = document.getElementById('user-menu');
+            const userDropdown = document.getElementById('user-dropdown');
+            
+            if (userMenu && userDropdown) {
+                userMenu.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('hidden');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!userDropdown.contains(e.target) && e.target !== userMenu) {
+                        userDropdown.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Initialize
+            updateLastUpdated();
+            setInterval(updateLastUpdated, 60000); // Update every minute
+            
+            // Refresh button
+            const refreshBtn = document.getElementById('refresh-btn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', () => {
+                    window.location.reload();
+                });
+            }
+            
+            // Check API status periodically
+            setInterval(async () => {
+                try {
+                    if (window.authManager) {
+                        const response = await window.authManager.makeRequest('/health', 'GET');
+                        const statusElement = document.getElementById('api-status');
+                        if (statusElement) {
+                            if (response.status === 'healthy') {
+                                statusElement.innerHTML = `
+                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                                    <span>Connected</span>
+                                `;
+                            } else {
+                                statusElement.innerHTML = `
+                                    <span class="w-2 h-2 rounded-full bg-yellow-500 mr-2"></span>
+                                    <span>Connection Issues</span>
+                                `;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('API status check failed:', error);
+                    const statusElement = document.getElementById('api-status');
+                    if (statusElement) {
+                        statusElement.innerHTML = `
+                            <span class="w-2 h-2 rounded-full bg-red-500 mr-2"></span>
+                            <span>Disconnected</span>
+                        `;
+                    }
+                }
+            }, 30000); // Check every 30 seconds
+        });
+    </script>"""
+            
+            # Insert before the closing body tag
+            if '</body>' in content:
+                content = content.replace('</body>', f'{js_script}\n</body>')
+            else:
+                content += f'\n{js_script}'
+        
+        # Write the updated content back to the file
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+            
+        print(f"✅ Updated {file_path}")
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error updating {file_path}: {str(e)}")
+        return False
+
+def main():
+    print("🚀 Starting dashboard authentication updates...")
+    
+    updated_count = 0
+    for dashboard_file in DASHBOARD_FILES:
+        file_path = DASHBOARD_DIR / dashboard_file
+        if file_path.exists():
+            if update_dashboard_file(file_path):
+                updated_count += 1
+        else:
+            print(f"⚠️  File not found: {file_path}")
+    
+    print(f"\n✨ Update complete! Updated {updated_count} dashboard(s).")
+    print("\nNext steps:")
+    print("1. Ensure 'auth-manager.js' is in the static/js/ directory")
+    print("2. Test the login functionality at /login.html")
+    print("3. Verify all protected dashboards require authentication")
+
+if __name__ == '__main__':
+    main()

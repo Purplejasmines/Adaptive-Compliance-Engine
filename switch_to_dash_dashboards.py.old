@@ -1,0 +1,52 @@
+"""
+Script to switch from static folder to dash folder for dashboards
+This renames the old static folder and ensures dash folder is used
+"""
+
+import os
+import shutil
+from pathlib import Path
+
+def switch_to_dash_dashboards():
+    """Rename static folder and ensure dash folder is active"""
+    
+    static_path = Path("static")
+    static_backup_path = Path("static_OLD_BACKUP")
+    dash_path = Path("dash")
+    
+    print("=" * 60)
+    print("SWITCHING TO DASH FOLDER DASHBOARDS")
+    print("=" * 60)
+    
+    # Check if dash folder exists
+    if not dash_path.exists():
+        print("❌ ERROR: dash folder not found!")
+        return False
+    
+    print(f"✓ Found dash folder with {len(list(dash_path.glob('*.html')))} HTML files")
+    
+    # Backup static folder if it exists
+    if static_path.exists():
+        if static_backup_path.exists():
+            print(f"⚠️  Removing old backup: {static_backup_path}")
+            shutil.rmtree(static_backup_path)
+        
+        print(f"📦 Renaming {static_path} to {static_backup_path}")
+        static_path.rename(static_backup_path)
+        print(f"✓ Old dashboards backed up to: {static_backup_path}")
+    else:
+        print("ℹ️  No static folder found (already using dash folder)")
+    
+    print("\n" + "=" * 60)
+    print("✅ DASHBOARD SWITCH COMPLETE!")
+    print("=" * 60)
+    print("\nNext steps:")
+    print("1. Restart the FastAPI server")
+    print("2. Clear your browser cache (Ctrl+Shift+Delete)")
+    print("3. Hard refresh the page (Ctrl+F5)")
+    print("\nThe server will now serve dashboards from the 'dash' folder.")
+    
+    return True
+
+if __name__ == "__main__":
+    switch_to_dash_dashboards()

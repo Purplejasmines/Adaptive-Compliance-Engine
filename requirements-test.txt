@@ -1,0 +1,12 @@
+# Minimal requirements for AI testing
+# Only include what's absolutely necessary for the test script
+
+# Basic async support
+asyncio
+
+# JSON handling (built-in, but explicit)
+# No additional packages needed for basic testing
+
+# Optional: Add logging if needed
+# structlog==23.2.0
+

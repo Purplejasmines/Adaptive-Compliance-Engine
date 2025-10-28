@@ -1,0 +1,49 @@
+groups:
+  - name: zra_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(zra_requests_total{status=~"5.."}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }} errors per second"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(zra_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time detected"
+          description: "95th percentile response time is {{ $value }} seconds"
+
+      - alert: LowComplianceScore
+        expr: zra_compliance_score < 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low compliance score detected"
+          description: "Compliance score is {{ $value }}"
+
+      - alert: HighFraudDetections
+        expr: rate(zra_fraud_detections_total[5m]) > 0.5
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High fraud detection rate"
+          description: "Fraud detection rate is {{ $value }} per second"
+
+      - alert: SystemDown
+        expr: up{job="zra-app"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "ZRA system is down"
+          description: "ZRA application is not responding"
+
+
